@@ -2,8 +2,7 @@ package org.kruithne.gamething.screens.menus;
 
 import org.kruithne.gamething.rendering.RenderPosition;
 import org.kruithne.gamething.screens.ScreenBase;
-import org.kruithne.gamething.ui.RenderImage;
-import org.newdawn.slick.Color;
+import org.kruithne.gamething.rendering.RenderImage;
 import org.newdawn.slick.GameContainer;
 
 public class MainScreen extends ScreenBase
@@ -16,6 +15,8 @@ public class MainScreen extends ScreenBase
 				ImageLoader.getImage("play_button_flash.png"),
 				0, 300
 		);*/
+
+		background = new RenderImage("brick.png");
 
 		logo = new RenderImage("logo.png", 0, 35);
 		logoFlash = new RenderImage("logo_flash.png", 0, 35);
@@ -42,9 +43,9 @@ public class MainScreen extends ScreenBase
 	}
 
 	@Override
-	public Color getBackColor()
+	public RenderImage getBackImage()
 	{
-		return new Color(81, 65, 53);
+		return background;
 	}
 
 	/*@Override
@@ -68,6 +69,7 @@ public class MainScreen extends ScreenBase
 
 	private RenderImage logo;
 	private RenderImage logoFlash;
+	private RenderImage background;
 	private float logoFlashAlpha = 0F;
 	private boolean logoIsUpdating = true;
 	/*private FadeButton playButton;

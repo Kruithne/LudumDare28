@@ -18,6 +18,7 @@ public class MainGame extends BasicGame
 	@Override
 	public void init(GameContainer gameContainer) throws SlickException
 	{
+		gameContainer.setShowFPS(false);
 		new EngineReadyEvent(gameContainer).fireEvent();
 	}
 

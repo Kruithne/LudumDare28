@@ -1,4 +1,4 @@
-package org.kruithne.gamething.ui;
+package org.kruithne.gamething.rendering;
 
 import org.kruithne.gamething.helpers.ImageLoader;
 import org.kruithne.gamething.rendering.RenderObject;
@@ -35,6 +35,18 @@ public class RenderImage extends RenderObject
 	{
 		if (posY == RenderPosition.SCREEN_CENTRE)
 			setDrawY((window.getHeight() / 2) - (image.getHeight() / 2));
+	}
+
+	@Override
+	public int getWidth()
+	{
+		return image.getWidth();
+	}
+
+	@Override
+	public int getHeight()
+	{
+		return image.getHeight();
 	}
 
 	@Override

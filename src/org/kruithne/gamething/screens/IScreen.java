@@ -1,6 +1,7 @@
 package org.kruithne.gamething.screens;
 
 import org.kruithne.gamething.rendering.IRenderObject;
+import org.kruithne.gamething.rendering.RenderImage;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 
@@ -12,4 +13,6 @@ public interface IScreen
 	void addComponent(IRenderObject object);
 	List<IRenderObject> getComponents();
 	Color getBackColor();
+	RenderImage getBackImage();
+	boolean tileBackground();
 }
