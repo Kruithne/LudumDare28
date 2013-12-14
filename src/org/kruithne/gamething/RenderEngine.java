@@ -19,6 +19,8 @@ public class RenderEngine implements IRenderEvent, IUpdateEvent
 	@Override
 	public void onRender(GameContainer window, Graphics renderer)
 	{
+		renderer.setBackground(currentScreen.getBackColor());
+
 		for (IRenderObject object : currentScreen.getComponents())
 		{
 			switch (object.getRenderType())

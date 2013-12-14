@@ -3,6 +3,7 @@ package org.kruithne.gamething.screens.menus;
 import org.kruithne.gamething.rendering.RenderPosition;
 import org.kruithne.gamething.screens.ScreenBase;
 import org.kruithne.gamething.ui.RenderImage;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 
 public class MainScreen extends ScreenBase
@@ -38,6 +39,12 @@ public class MainScreen extends ScreenBase
 
 		logo.setRenderPositionX(RenderPosition.SCREEN_CENTRE, window);
 		logoFlash.setRenderPositionX(RenderPosition.SCREEN_CENTRE, window);
+	}
+
+	@Override
+	public Color getBackColor()
+	{
+		return new Color(81, 65, 53);
 	}
 
 	/*@Override
