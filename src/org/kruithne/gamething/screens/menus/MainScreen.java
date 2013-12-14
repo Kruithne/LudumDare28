@@ -1,27 +1,46 @@
 package org.kruithne.gamething.screens.menus;
 
-import org.kruithne.gamething.helpers.ImageLoader;
-import org.kruithne.gamething.helpers.RenderHelper;
-import org.kruithne.gamething.screens.IMenuScreen;
-import org.kruithne.gamething.ui.FadeButton;
-import org.newdawn.slick.Color;
+import org.kruithne.gamething.rendering.RenderPosition;
+import org.kruithne.gamething.screens.ScreenBase;
+import org.kruithne.gamething.ui.RenderImage;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
-public class MainScreen implements IMenuScreen
+public class MainScreen extends ScreenBase
 {
 	public MainScreen()
 	{
-		playButtonImage = ImageLoader.getImage("play_button.png");
+		/*playButtonImage = ImageLoader.getImage("play_button.png");
 		playButton = new FadeButton(
 				playButtonImage,
 				ImageLoader.getImage("play_button_flash.png"),
 				0, 300
-		);
+		);*/
+
+		logo = new RenderImage("logo.png", 0, 35);
+		logoFlash = new RenderImage("logo_flash.png", 0, 35);
+
+		addComponent(logo);
+		addComponent(logoFlash);
 	}
 
 	@Override
+	public void update(GameContainer window)
+	{
+		if (logoIsUpdating)
+		{
+			if (logoFlashAlpha >= 1F)
+				logoIsUpdating = false;
+			else
+				logoFlashAlpha += 1F / 10000;
+
+			logoFlash.setAlpha(logoFlashAlpha);
+		}
+
+		logo.setRenderPositionX(RenderPosition.SCREEN_CENTRE, window);
+		logoFlash.setRenderPositionX(RenderPosition.SCREEN_CENTRE, window);
+	}
+
+	/*@Override
 	public void draw(GameContainer window, Graphics renderer)
 	{
 		renderer.setBackground(new Color(81, 65, 53));
@@ -38,24 +57,13 @@ public class MainScreen implements IMenuScreen
 
 		playButton.setX(RenderHelper.getCenterX(window, playButtonImage));
 		playButton.draw(window, renderer);
-	}
+	}*/
 
-	@Override
-	public void update(GameContainer window)
-	{
-		if (logoIsUpdating)
-		{
-			if (logoFlashAlpha >= 1F)
-				logoIsUpdating = false;
-			else
-				logoFlashAlpha += 1F / 10000;
-		}
-
-		playButton.update(window);
-	}
-
+	private RenderImage logo;
+	private RenderImage logoFlash;
 	private float logoFlashAlpha = 0F;
 	private boolean logoIsUpdating = true;
-	private FadeButton playButton;
+	/*private FadeButton playButton;
 	private Image playButtonImage;
+	private Image playButton;*/
 }

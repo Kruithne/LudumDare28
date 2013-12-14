@@ -1,10 +1,13 @@
 package org.kruithne.gamething.screens;
 
+import org.kruithne.gamething.rendering.IRenderObject;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+
+import java.util.List;
 
 public interface IScreen
 {
-	public void draw(GameContainer window, Graphics renderer);
-	public void update(GameContainer window);
+	void update(GameContainer window);
+	void addComponent(IRenderObject object);
+	List<IRenderObject> getComponents();
 }
