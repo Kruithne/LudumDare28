@@ -16,7 +16,7 @@ public abstract class GameBase extends BasicGame implements IGame
 	@Override
 	public void init(GameContainer window) throws SlickException
 	{
-		// Override if needed.
+		window.setShowFPS(false);
 	}
 
 	@Override

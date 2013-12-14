@@ -11,6 +11,6 @@ public class MainScreen implements IMenuScreen
 	@Override
 	public void draw(GameContainer window, Graphics renderer)
 	{
-		RenderHelper.renderBackground(window, renderer, ImageLoader.getImage("dirt.png"));
+		RenderHelper.renderBackground(window, renderer, ImageLoader.getImage("dirt_background.png"));
 	}
 }

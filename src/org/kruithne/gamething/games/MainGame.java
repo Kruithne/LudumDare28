@@ -9,6 +9,7 @@ public class MainGame extends GameBase
 	@Override
 	public void init(GameContainer window) throws SlickException
 	{
+		super.init(window);
 		currentScreen = new MainScreen();
 	}
 }
