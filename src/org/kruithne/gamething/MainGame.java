@@ -11,7 +11,7 @@ public class MainGame extends BasicGame
 {
 	public MainGame()
 	{
-		super("Game Thing!");
+		super("The Depths of Kargron");
 	}
 
 	@Override
