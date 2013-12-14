@@ -25,6 +25,7 @@ public class GameThing extends BasicGame
 	public void render(GameContainer gameContainer, Graphics graphics) throws SlickException
 	{
 		graphics.drawString("Hello, world!", 20, 20);
+		graphics.drawImage(ImageLoader.getImage("/res/images/dirt.png"), 50, 50);
 	}
 
 	public static void main(String[] args)
