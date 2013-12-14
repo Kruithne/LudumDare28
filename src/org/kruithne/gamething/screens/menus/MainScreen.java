@@ -10,6 +10,6 @@ public class MainScreen implements IMenuScreen
 	@Override
 	public void draw(GameContainer window, Graphics renderer)
 	{
-		renderer.setBackground(new Color(138, 89, 49));
+		renderer.setBackground(new Color(81, 65, 53));
 	}
 }
