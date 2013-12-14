@@ -12,4 +12,9 @@ public class RenderHelper
 			for (int y = 0; y < window.getHeight(); y = y + image.getHeight())
 				renderer.drawImage(image, x, y);
 	}
+
+	public static int getCenterX(GameContainer window, Image image)
+	{
+		return (window.getWidth() / 2) - (image.getWidth() / 2);
+	}
 }

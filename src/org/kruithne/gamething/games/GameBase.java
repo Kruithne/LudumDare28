@@ -22,7 +22,7 @@ public abstract class GameBase extends BasicGame implements IGame
 	@Override
 	public void update(GameContainer window, int i) throws SlickException
 	{
-		// Override if needed.
+		currentScreen.update(window);
 	}
 
 	@Override

@@ -6,4 +6,5 @@ import org.newdawn.slick.Graphics;
 public interface IScreen
 {
 	public void draw(GameContainer window, Graphics renderer);
+	public void update(GameContainer window);
 }
