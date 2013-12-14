@@ -8,6 +8,9 @@ import org.kruithne.gamething.rendering.RenderImage;
 import org.kruithne.gamething.ui.interfaces.IButtonUI;
 import org.newdawn.slick.Graphics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class RenderButton implements IRenderable, IReceiveMouseMoveEvent, IReceiveMouseClickEvent, IButtonUI
 {
 	public RenderButton(RenderImage image)
@@ -73,7 +76,8 @@ public abstract class RenderButton implements IRenderable, IReceiveMouseMoveEven
 	@Override
 	public void handleClick()
 	{
-		// Override if needed!
+		for (Runnable callback : clickHandlers)
+			callback.run();
 	}
 
 	@Override
@@ -82,6 +86,12 @@ public abstract class RenderButton implements IRenderable, IReceiveMouseMoveEven
 		buttonImage.render(renderer);
 	}
 
+	public void addClickHandler(Runnable callback)
+	{
+		clickHandlers.add(callback);
+	}
+
 	protected boolean mouseIsOver = false;
 	protected RenderImage buttonImage;
+	protected List<Runnable> clickHandlers = new ArrayList<Runnable>();
 }
