@@ -1,8 +1,11 @@
 package org.kruithne.gamething;
 
+import org.kruithne.gamething.events.interfaces.IMouseClickEvent;
 import org.kruithne.gamething.events.interfaces.IMouseMoveEvent;
 import org.kruithne.gamething.events.interfaces.IRenderEvent;
 import org.kruithne.gamething.events.interfaces.IUpdateEvent;
+import org.kruithne.gamething.input.MouseButton;
+import org.kruithne.gamething.rendering.IReceiveMouseClickEvent;
 import org.kruithne.gamething.rendering.IReceiveMouseMoveEvent;
 import org.kruithne.gamething.rendering.IRenderable;
 import org.kruithne.gamething.screens.IScreen;
@@ -12,7 +15,7 @@ import org.kruithne.gamething.rendering.RenderImage;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent
+public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent, IMouseClickEvent
 {
 	public RenderEngine()
 	{
@@ -63,6 +66,14 @@ public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent
 		for (IRenderable renderable : currentScreen.getComponents())
 			if (renderable instanceof IReceiveMouseMoveEvent)
 				((IReceiveMouseMoveEvent) renderable).onMouseMove(sourceX, sourceY, x, y);
+	}
+
+	@Override
+	public void onMouseClick(MouseButton button, int x, int y)
+	{
+		for (IRenderable renderable : currentScreen.getComponents())
+			if (renderable instanceof IReceiveMouseClickEvent)
+				((IReceiveMouseClickEvent) renderable).onMouseClick(button, x, y);
 	}
 
 	protected IScreen currentScreen;

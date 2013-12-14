@@ -5,4 +5,5 @@ public interface IButtonUI
 	void handleMouseEnter();
 	void handleMouseLeave();
 	void handleMouseOver();
+	void handleClick();
 }
