@@ -11,7 +11,7 @@ public class MainGame extends BasicGame
 {
 	public MainGame()
 	{
-		super("The Depths of Kargron");
+		super("The Depths of Kargron - Ludum Dare #28 Entry by Kruithne");
 	}
 
 	@Override
