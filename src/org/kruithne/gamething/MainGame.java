@@ -1,9 +1,7 @@
 package org.kruithne.gamething;
 
-import org.kruithne.gamething.events.EngineReadyEvent;
-import org.kruithne.gamething.events.MouseMoveEvent;
-import org.kruithne.gamething.events.RenderEvent;
-import org.kruithne.gamething.events.UpdateEvent;
+import org.kruithne.gamething.events.*;
+import org.kruithne.gamething.input.MouseButton;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -20,6 +18,12 @@ public class MainGame extends BasicGame
 	public void mouseMoved(int oldx, int oldy, int newx, int newy)
 	{
 		new MouseMoveEvent(oldx, oldy, newx, newy).fireEvent();
+	}
+
+	@Override
+	public void mouseClicked(int button, int x, int y, int clickCount)
+	{
+		new MouseClickEvent(MouseButton.getMouseButton(button), x, y).fireEvent();
 	}
 
 	@Override
