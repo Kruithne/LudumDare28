@@ -23,6 +23,11 @@ public class RenderImage extends RenderPositionalObject implements IRenderable
 		image.setAlpha(alpha);
 	}
 
+	public float getAlpha()
+	{
+		return image.getAlpha();
+	}
+
 	public void setRenderPositionX(RenderPosition posX, GameContainer window)
 	{
 		if (posX == RenderPosition.SCREEN_CENTRE)

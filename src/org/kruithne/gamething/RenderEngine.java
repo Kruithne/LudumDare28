@@ -6,6 +6,7 @@ import org.kruithne.gamething.events.interfaces.IUpdateEvent;
 import org.kruithne.gamething.rendering.IReceiveMouseMoveEvent;
 import org.kruithne.gamething.rendering.IRenderable;
 import org.kruithne.gamething.screens.IScreen;
+import org.kruithne.gamething.screens.menus.BlackScreen;
 import org.kruithne.gamething.screens.menus.MainScreen;
 import org.kruithne.gamething.rendering.RenderImage;
 import org.newdawn.slick.GameContainer;
@@ -16,6 +17,7 @@ public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent
 	public RenderEngine()
 	{
 		currentScreen = new MainScreen();
+		overlayScreen = new BlackScreen();
 	}
 
 	@Override
@@ -39,7 +41,13 @@ public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent
 			}
 		}
 
-		for (IRenderable renderable : currentScreen.getComponents())
+		renderScreen(renderer, currentScreen);
+		renderScreen(renderer, overlayScreen);
+	}
+
+	protected void renderScreen(Graphics renderer, IScreen screen)
+	{
+		for (IRenderable renderable : screen.getComponents())
 			renderable.render(renderer);
 	}
 
@@ -58,4 +66,5 @@ public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent
 	}
 
 	protected IScreen currentScreen;
+	protected IScreen overlayScreen;
 }
