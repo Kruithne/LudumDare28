@@ -1,0 +1,1 @@
+java -Djava.library.path=lib/native/windows -jar ludum_dare_28.jar
