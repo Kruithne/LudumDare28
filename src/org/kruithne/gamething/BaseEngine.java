@@ -7,10 +7,7 @@ import org.picocontainer.Startable;
 
 public class BaseEngine implements Startable
 {
-	public BaseEngine(Logger output)
-	{
-		this.output = output;
-	}
+	public BaseEngine()	{}
 
 	@Override
 	public void start()
@@ -23,7 +20,7 @@ public class BaseEngine implements Startable
 		}
 		catch(SlickException exception)
 		{
-			output.logException(exception);
+			Logger.logException(exception);
 		}
 	}
 
@@ -33,7 +30,6 @@ public class BaseEngine implements Startable
 		container.destroy();
 	}
 
-	protected final Logger output;
 	protected AppGameContainer container;
 	protected int screenX = 1024;
 	protected int screenY = 512;
