@@ -1,16 +1,17 @@
 package org.kruithne.gamething;
 
+import org.kruithne.gamething.events.interfaces.IMouseMoveEvent;
 import org.kruithne.gamething.events.interfaces.IRenderEvent;
 import org.kruithne.gamething.events.interfaces.IUpdateEvent;
-import org.kruithne.gamething.rendering.IRenderObject;
+import org.kruithne.gamething.rendering.IReceiveMouseMoveEvent;
+import org.kruithne.gamething.rendering.IRenderable;
 import org.kruithne.gamething.screens.IScreen;
 import org.kruithne.gamething.screens.menus.MainScreen;
 import org.kruithne.gamething.rendering.RenderImage;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 
-public class RenderEngine implements IRenderEvent, IUpdateEvent
+public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent
 {
 	public RenderEngine()
 	{
@@ -30,33 +31,30 @@ public class RenderEngine implements IRenderEvent, IUpdateEvent
 			{
 				for (int x = 0; x < window.getWidth(); x += backImage.getWidth())
 					for (int y = 0; y < window.getHeight(); y += backImage.getHeight())
-						renderer.drawImage((Image) backImage.getRenderObject(), x, y);
+						backImage.setDrawX(x).setDrawY(y).render(renderer);
 			}
 			else
 			{
-				renderer.drawImage((Image) backImage.getRenderObject(), backImage.getDrawX(), backImage.getDrawY());
+				backImage.render(renderer);
 			}
 		}
 
-		for (IRenderObject object : currentScreen.getComponents())
-		{
-			switch (object.getRenderType())
-			{
-				case IMAGE:
-					renderer.drawImage((Image) object.getRenderObject(), object.getDrawX(), object.getDrawY());
-				break;
-
-				case TEXT:
-					renderer.drawString(object.getRenderObject().toString(), object.getDrawX(), object.getDrawY());
-				break;
-			}
-		}
+		for (IRenderable renderable : currentScreen.getComponents())
+			renderable.render(renderer);
 	}
 
 	@Override
 	public void onUpdate(GameContainer window)
 	{
 		currentScreen.update(window);
+	}
+
+	@Override
+	public void onMouseMove(int sourceX, int sourceY, int x, int y)
+	{
+		for (IRenderable renderable : currentScreen.getComponents())
+			if (renderable instanceof IReceiveMouseMoveEvent)
+				((IReceiveMouseMoveEvent) renderable).onMouseMove(sourceX, sourceY, x, y);
 	}
 
 	protected IScreen currentScreen;

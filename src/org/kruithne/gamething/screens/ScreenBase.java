@@ -1,6 +1,6 @@
 package org.kruithne.gamething.screens;
 
-import org.kruithne.gamething.rendering.IRenderObject;
+import org.kruithne.gamething.rendering.IRenderable;
 import org.kruithne.gamething.rendering.RenderImage;
 import org.newdawn.slick.Color;
 
@@ -10,13 +10,13 @@ import java.util.List;
 public abstract class ScreenBase implements IScreen
 {
 	@Override
-	public void addComponent(IRenderObject object)
+	public void addComponent(IRenderable object)
 	{
 		renderObjects.add(object);
 	}
 
 	@Override
-	public List<IRenderObject> getComponents()
+	public List<IRenderable> getComponents()
 	{
 		return renderObjects;
 	}
@@ -40,5 +40,5 @@ public abstract class ScreenBase implements IScreen
 		return true;
 	}
 
-	private List<IRenderObject> renderObjects = new ArrayList<IRenderObject>(0);
+	private List<IRenderable> renderObjects = new ArrayList<IRenderable>(0);
 }

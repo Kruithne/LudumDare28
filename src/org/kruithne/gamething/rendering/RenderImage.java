@@ -1,13 +1,11 @@
 package org.kruithne.gamething.rendering;
 
 import org.kruithne.gamething.helpers.ImageLoader;
-import org.kruithne.gamething.rendering.RenderObject;
-import org.kruithne.gamething.rendering.RenderPosition;
-import org.kruithne.gamething.rendering.RenderType;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-public class RenderImage extends RenderObject
+public class RenderImage extends RenderPositionalObject implements IRenderable
 {
 	public RenderImage(String imageString)
 	{
@@ -37,28 +35,20 @@ public class RenderImage extends RenderObject
 			setDrawY((window.getHeight() / 2) - (image.getHeight() / 2));
 	}
 
-	@Override
 	public int getWidth()
 	{
 		return image.getWidth();
 	}
 
-	@Override
 	public int getHeight()
 	{
 		return image.getHeight();
 	}
 
 	@Override
-	public RenderType getRenderType()
+	public void render(Graphics renderer)
 	{
-		return RenderType.IMAGE;
-	}
-
-	@Override
-	public Object getRenderObject()
-	{
-		return image;
+		renderer.drawImage(image, drawX, drawY);
 	}
 
 	protected Image image;
