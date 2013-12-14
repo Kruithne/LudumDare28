@@ -1,4 +1,4 @@
-package org.kruithne.gamething;
+package org.kruithne.gamething.helpers;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -14,7 +14,7 @@ public class ImageLoader
 	{
 		try
 		{
-			return new Image(path).getScaledCopy(scale);
+			return new Image("res/" + path).getScaledCopy(scale);
 		}
 		catch (SlickException exception)
 		{
