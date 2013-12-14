@@ -33,7 +33,7 @@ public class GameThing extends BasicGame
 		{
 			AppGameContainer container;
 			container = new AppGameContainer(new GameThing("Game Thing!"));
-			container.setDisplayMode(640, 480, false);
+			container.setDisplayMode(1024, 512, false);
 			container.start();
 		}
 		catch(SlickException exception)
