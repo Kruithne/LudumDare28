@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
-Class-Path: slick.jar lwjgl_util.jar jinput.jar lwjgl.jar res
+Class-Path: slick.jar lwjgl_util.jar jinput.jar lwjgl.jar picocontaine
+ r-2.14.1.jar res
 Main-Class: org.kruithne.gamething.GameThing
 
