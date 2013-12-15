@@ -23,7 +23,7 @@ public class CharacterSpawn implements ITileObject
 	@Override
 	public TileType getTileType()
 	{
-		return TileType.CHAR_START;
+		return TileType.DARK_BRICK;
 	}
 
 	protected int tileX;

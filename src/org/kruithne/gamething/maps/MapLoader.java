@@ -34,14 +34,16 @@ public class MapLoader
 
 				if (tile != null)
 				{
-					ITileObject object;
-
 					if (tile == TileType.CHAR_START)
-						object = new CharacterSpawn(col, row);
+					{
+						CharacterSpawn spawn = new CharacterSpawn(col, row);
+						tiles.add(spawn);
+						tiles.add(new RenderMapTile(spawn.getTileType(), col, row));
+					}
 					else
-						object = new RenderMapTile(tile, col, row);
-
-					tiles.add(object);
+					{
+						tiles.add(new RenderMapTile(tile, col, row));
+					}
 				}
 
 				col++;
