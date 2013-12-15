@@ -13,8 +13,10 @@ public class CollisionHandler
 
 	public boolean runCheck(float projectedX, float projectedY, float aX, float aY)
 	{
-		float bX = aX + 64;
-		float bY = aY + 64;
+		aX -= 1;
+		aY -= 1;
+		float bX = aX + 63;
+		float bY = aY + 63;
 
 		for (ITileObject object : map)
 		{
