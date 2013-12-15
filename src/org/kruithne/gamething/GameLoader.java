@@ -32,6 +32,6 @@ public class GameLoader implements Startable
 
 	protected AppGameContainer container;
 	protected int screenX = 1024;
-	protected int screenY = 512;
+	protected int screenY = 640;
 	protected boolean fullScreen = false;
 }
