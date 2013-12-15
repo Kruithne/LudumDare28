@@ -5,7 +5,8 @@ import org.kruithne.gamething.misc.RGB;
 public enum TileType
 {
 	CHAR_START(255, 0, 0, "char.png"),
-	BRICK(112, 89, 73, "brick.png", true);
+	BRICK(112, 89, 73, "brick.png", true),
+	DARK_BRICK(33, 26, 22, "dark_brick.png");
 
 	private TileType(int r, int g, int b, String file, boolean causesCollision)
 	{

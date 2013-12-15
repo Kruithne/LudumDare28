@@ -14,8 +14,10 @@ public class CollisionHandler
 
 	public boolean runCheck(float projectedX, float projectedY, float startX, float startY)
 	{
-		float endX = startX + 64;
-		float endY = startY + 64;
+		startX = startX - 4;
+		startY = startY - 4;
+		float endX = startX + 60;
+		float endY = startY + 60;
 
 		for (ITileObject object : map)
 		{
