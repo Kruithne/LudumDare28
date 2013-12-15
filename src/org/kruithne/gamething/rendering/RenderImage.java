@@ -1,7 +1,7 @@
 package org.kruithne.gamething.rendering;
 
+import org.kruithne.gamething.GameThing;
 import org.kruithne.gamething.helpers.ImageLoader;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -28,16 +28,16 @@ public class RenderImage extends RenderPositionalObject implements IRenderable
 		return image.getAlpha();
 	}
 
-	public void setRenderPositionX(RenderPosition posX, GameContainer window)
+	public void setRenderPositionX(RenderPosition posX)
 	{
 		if (posX == RenderPosition.SCREEN_CENTRE)
-			setDrawX((window.getWidth() / 2) - (image.getWidth() / 2));
+			setDrawX((GameThing.windowWidth / 2) - (image.getWidth() / 2));
 	}
 
-	public void setRenderPositionY(RenderPosition posY, GameContainer window)
+	public void setRenderPositionY(RenderPosition posY)
 	{
 		if (posY == RenderPosition.SCREEN_CENTRE)
-			setDrawY((window.getHeight() / 2) - (image.getHeight() / 2));
+			setDrawY((GameThing.windowHeight / 2) - (image.getHeight() / 2));
 	}
 
 	public int getWidth()

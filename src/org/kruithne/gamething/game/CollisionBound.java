@@ -41,6 +41,11 @@ public class CollisionBound
 		}
 	}
 
+	public Entity getEntity()
+	{
+		return entity;
+	}
+
 	protected float offsetX;
 	protected float offsetY;
 	protected float aX;

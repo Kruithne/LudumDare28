@@ -27,6 +27,10 @@ public class MainScreen extends ScreenBase
 			}
 		});
 
+		logo.setRenderPositionX(RenderPosition.SCREEN_CENTRE);
+		logoFlash.setRenderPositionX(RenderPosition.SCREEN_CENTRE);
+		playButtonImage.setRenderPositionX(RenderPosition.SCREEN_CENTRE);
+
 		addComponent(logo);
 		addComponent(logoFlash);
 		addComponent(playButton);
@@ -44,11 +48,6 @@ public class MainScreen extends ScreenBase
 
 			logoFlash.setAlpha(logoFlashAlpha);
 		}
-
-		// Centre all the things!
-		logo.setRenderPositionX(RenderPosition.SCREEN_CENTRE, window);
-		logoFlash.setRenderPositionX(RenderPosition.SCREEN_CENTRE, window);
-		playButtonImage.setRenderPositionX(RenderPosition.SCREEN_CENTRE, window);
 	}
 
 	@Override

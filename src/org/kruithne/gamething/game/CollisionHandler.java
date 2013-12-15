@@ -1,7 +1,9 @@
 package org.kruithne.gamething.game;
 
+import org.kruithne.gamething.GameController;
 import org.kruithne.gamething.entity.Entity;
 import org.kruithne.gamething.maps.ITileObject;
+import org.kruithne.gamething.maps.TileType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +31,8 @@ public class CollisionHandler
 		{
 			if (entity.getType().isCollidable())
 			{
-				float entityX = (entity.getX() + projectedX) - 1;
-				float entityY = (entity.getY() + projectedY) - 1;
+				float entityX = (entity.getX() + projectedX) + 1;
+				float entityY = (entity.getY() + projectedY) + 1;
 				float entityEndX = entityX + 63;
 				float entityEndY = entityY + 63;
 
@@ -47,18 +49,32 @@ public class CollisionHandler
 
 		for (ITileObject object : map)
 		{
-			if (object.getTileType().isCollidable())
+			TileType type = object.getTileType();
+
+			float tileStartX = (object.getTileX() * 64) + projectedX;
+			float tileStartY = (object.getTileY() * 64) + projectedY;
+
+			float tileEndX = tileStartX + 64;
+			float tileEndY = tileStartY + 64;
+
+			CollisionBound check = new CollisionBound(tileStartX, tileStartY, tileEndX, tileEndY);
+
+			if (type.isCollidable())
 			{
-				float tileStartX = (object.getTileX() * 64) + projectedX;
-				float tileStartY = (object.getTileY() * 64) + projectedY;
-
-				float tileEndX = tileStartX + 64;
-				float tileEndY = tileStartY + 64;
-
-				CollisionBound check = new CollisionBound(tileStartX, tileStartY, tileEndX, tileEndY);
 				for (CollisionBound bound : bounds)
 					if (intersects(check, bound))
 						return false;
+			}
+			else if (type == TileType.END_HOLE)
+			{
+				for (CollisionBound bound : bounds)
+				{
+					if (bound.getEntity() != null && bound.getEntity().getType() == TileType.CRATE)
+					{
+						if (intersects(check, bound))
+							GameController.endGame();
+					}
+				}
 			}
 		}
 
