@@ -6,13 +6,20 @@ public enum TileType
 {
 	CHAR_START(255, 0, 0, "char.png"),
 	BRICK(112, 89, 73, "brick.png", true),
-	DARK_BRICK(33, 26, 22, "dark_brick.png");
+	DARK_BRICK(33, 26, 22, "dark_brick.png"),
+	CRATE(99, 68, 51, "crate.png", true, true);
 
-	private TileType(int r, int g, int b, String file, boolean causesCollision)
+	private TileType(int r, int g, int b, String file, boolean causesCollision, boolean isPushable)
 	{
 		rgb = new RGB(r, g, b);
 		texture = file;
 		collidable = causesCollision;
+		pushable = isPushable;
+	}
+
+	private TileType(int r, int g, int b, String file, boolean causesCollision)
+	{
+		this(r, g, b, file, causesCollision, false);
 	}
 
 	private TileType(int r, int g, int b, String file)
@@ -39,7 +46,13 @@ public enum TileType
 		return collidable;
 	}
 
+	public boolean isPushable()
+	{
+		return pushable;
+	}
+
 	public RGB rgb;
 	private String texture;
 	private boolean collidable;
+	private boolean pushable;
 }

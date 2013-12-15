@@ -40,6 +40,12 @@ public class MapLoader
 						tiles.add(spawn);
 						tiles.add(new RenderMapTile(spawn.getTileType(), col, row));
 					}
+					else if (tile == TileType.CRATE)
+					{
+						PushableCrate crate = new PushableCrate(col, row);
+						tiles.add(crate);
+						tiles.add(new RenderMapTile(crate.getTileType(), col, row));
+					}
 					else
 					{
 						tiles.add(new RenderMapTile(tile, col, row));

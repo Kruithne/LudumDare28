@@ -5,10 +5,7 @@ import org.kruithne.gamething.game.CollisionHandler;
 import org.kruithne.gamething.game.Movement;
 import org.kruithne.gamething.input.KeyBinding;
 import org.kruithne.gamething.logging.Logger;
-import org.kruithne.gamething.maps.CharacterSpawn;
-import org.kruithne.gamething.maps.ITileObject;
-import org.kruithne.gamething.maps.MapLoader;
-import org.kruithne.gamething.maps.RenderMapTile;
+import org.kruithne.gamething.maps.*;
 import org.kruithne.gamething.rendering.IReceiveKeyDownEvent;
 import org.kruithne.gamething.rendering.IReceiveKeyUpEvent;
 import org.kruithne.gamething.rendering.IRenderable;
@@ -22,10 +19,15 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 {
 	public LevelScreen()
 	{
+		crate = new RenderImage("crate.png");
+		charImage = new RenderImage("char.png");
 		backgroundImage = new RenderImage("dirt.png");
+
 		setupMap("start_map.png");
 
-		charImage = new RenderImage("char.png");
+		addComponent(crate);
+		collisionHandler.addEffectedByCollisionObject(crate);
+
 		charImage.setDrawX((GameThing.windowWidth / 2) - (charImage.getWidth() / 2));
 		charImage.setDrawY((GameThing.windowHeight / 2) - (charImage.getHeight() / 2));
 		addComponent(charImage);
@@ -41,6 +43,8 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 				addComponent((RenderMapTile) tile);
 			else if (tile instanceof CharacterSpawn)
 				setSpawn(tile.getTileX(), tile.getTileY());
+			else if (tile instanceof PushableCrate)
+				setCrateSpawn(tile.getTileX(), tile.getTileY());
 		}
 		collisionHandler.setMap(map);
 	}
@@ -49,6 +53,12 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 	{
 		offsetX = (GameThing.windowWidth / 2) - (tileX * 64);
 		offsetY = (GameThing.windowHeight / 2) - (tileY * 64);
+	}
+
+	protected void setCrateSpawn(int tileX, int tileY)
+	{
+		crate.setDrawX((tileX * 64) + offsetX);
+		crate.setDrawY((tileY * 64) + offsetY);
 	}
 
 	@Override
@@ -74,28 +84,28 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 		if (movement.isMovingRight())
 		{
 			float projectedX = offsetX - speed;
-			if (collisionHandler.runCheck(projectedX, offsetY, charX, charY))
+			if (collisionHandler.runCheck(projectedX, offsetY, charX, charY, offsetX, offsetY))
 				offsetX = projectedX;
 		}
 
 		if (movement.isMovingLeft())
 		{
 			float projectedX = offsetX + speed;
-			if (collisionHandler.runCheck(projectedX, offsetY, charX, charY))
+			if (collisionHandler.runCheck(projectedX, offsetY, charX, charY, offsetX, offsetY))
 				offsetX = projectedX;
 		}
 
 		if (movement.isMovingBackward())
 		{
 			float projectedY = offsetY - speed;
-			if (collisionHandler.runCheck(offsetX, projectedY, charX, charY))
+			if (collisionHandler.runCheck(offsetX, projectedY, charX, charY, offsetX, offsetY))
 				offsetY = projectedY;
 		}
 
 		if (movement.isMovingForward())
 		{
 			float projectedY = offsetY + speed;
-			if (collisionHandler.runCheck(offsetX, projectedY, charX, charY))
+			if (collisionHandler.runCheck(offsetX, projectedY, charX, charY, offsetX, offsetY))
 				offsetY = projectedY;
 		}
 	}
@@ -136,6 +146,7 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 	protected CollisionHandler collisionHandler = new CollisionHandler();
 	protected RenderImage backgroundImage;
 	protected RenderImage charImage;
+	protected RenderImage crate;
 	protected float offsetX;
 	protected float offsetY;
 }
