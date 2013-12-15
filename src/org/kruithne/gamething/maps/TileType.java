@@ -1,7 +1,6 @@
 package org.kruithne.gamething.maps;
 
 import org.kruithne.gamething.misc.RGB;
-import org.kruithne.gamething.rendering.RenderImage;
 
 public enum TileType
 {
