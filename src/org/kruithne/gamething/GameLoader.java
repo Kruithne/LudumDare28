@@ -5,9 +5,9 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 import org.picocontainer.Startable;
 
-public class BaseEngine implements Startable
+public class GameLoader implements Startable
 {
-	public BaseEngine()	{}
+	public GameLoader()	{}
 
 	@Override
 	public void start()

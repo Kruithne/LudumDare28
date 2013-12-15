@@ -1,5 +1,6 @@
 package org.kruithne.gamething.screens.menus;
 
+import org.kruithne.gamething.GameController;
 import org.kruithne.gamething.rendering.RenderPosition;
 import org.kruithne.gamething.screens.ScreenBase;
 import org.kruithne.gamething.rendering.RenderImage;
@@ -17,6 +18,13 @@ public class MainScreen extends ScreenBase
 
 		playButtonImage = new RenderImage("play_button.png", 0, 300);
 		playButton = new RenderSimpleButton(playButtonImage, new RenderImage("play_button_flash.png"));
+
+		playButton.addClickHandler(new Runnable() {
+			@Override
+			public void run() {
+				GameController.setGameScreen(new MainScreen());
+			}
+		});
 
 		addComponent(logo);
 		addComponent(logoFlash);
