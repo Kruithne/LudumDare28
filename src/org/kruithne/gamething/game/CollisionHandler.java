@@ -1,6 +1,5 @@
 package org.kruithne.gamething.game;
 
-import org.kruithne.gamething.logging.Logger;
 import org.kruithne.gamething.maps.ITileObject;
 
 import java.util.List;
@@ -14,10 +13,11 @@ public class CollisionHandler
 
 	public boolean runCheck(float projectedX, float projectedY, float startX, float startY)
 	{
-		startX = startX - 4;
-		startY = startY - 4;
-		float endX = startX + 60;
-		float endY = startY + 60;
+		float aX = startX - 4;
+		float aY = startY - 4;
+
+		float bX = aX + 60;
+		float bY = aY + 60;
 
 		for (ITileObject object : map)
 		{
@@ -29,10 +29,16 @@ public class CollisionHandler
 				float tileEndX = tileStartX + 64;
 				float tileEndY = tileStartY + 64;
 
-				if (intersects(tileStartX, tileStartY, tileEndX, tileEndY, startX, startY))
+				if (intersects(tileStartX, tileStartY, tileEndX, tileEndY, aX, aY))
 					return false;
 
-				if (intersects(tileStartX, tileStartY, tileEndX, tileEndY, endX, endY))
+				if (intersects(tileStartX, tileStartY, tileEndX, tileEndY, bX, bY))
+					return false;
+
+				if (intersects(tileStartX, tileStartY, tileEndX, tileEndY, bX, aY))
+					return false;
+
+				if (intersects(tileStartX, tileStartY, tileEndX, tileEndY, aX, bY))
 					return false;
 			}
 		}
