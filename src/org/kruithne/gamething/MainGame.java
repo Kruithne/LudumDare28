@@ -27,6 +27,18 @@ public class MainGame extends BasicGame
 	}
 
 	@Override
+	public void keyPressed(int key, char c)
+	{
+		new KeyDownEvent(key).fireEvent();
+	}
+
+	@Override
+	public void keyReleased(int key, char c)
+	{
+		new KeyUpEvent(key).fireEvent();
+	}
+
+	@Override
 	public void init(GameContainer gameContainer) throws SlickException
 	{
 		gameContainer.setShowFPS(false);

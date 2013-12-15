@@ -2,18 +2,14 @@ package org.kruithne.gamething;
 
 import org.kruithne.gamething.events.interfaces.*;
 import org.kruithne.gamething.input.MouseButton;
-import org.kruithne.gamething.logging.Logger;
-import org.kruithne.gamething.rendering.IReceiveMouseClickEvent;
-import org.kruithne.gamething.rendering.IReceiveMouseMoveEvent;
-import org.kruithne.gamething.rendering.IRenderable;
+import org.kruithne.gamething.rendering.*;
 import org.kruithne.gamething.screens.IScreen;
 import org.kruithne.gamething.screens.IScreenOverlay;
 import org.kruithne.gamething.screens.menus.BlackScreen;
-import org.kruithne.gamething.rendering.RenderImage;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent, IMouseClickEvent
+public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent, IMouseClickEvent, IKeyUpEvent, IKeyDownEvent
 {
 	public RenderEngine()
 	{
@@ -100,6 +96,9 @@ public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent
 		if (currentScreen == null)
 			return;
 
+		if (currentScreen instanceof IReceiveMouseMoveEvent)
+			((IReceiveMouseMoveEvent) currentScreen).onMouseMove(sourceX, sourceY, x, y);
+
 		for (IRenderable renderable : currentScreen.getComponents())
 			if (renderable instanceof IReceiveMouseMoveEvent)
 				((IReceiveMouseMoveEvent) renderable).onMouseMove(sourceX, sourceY, x, y);
@@ -111,9 +110,40 @@ public class RenderEngine implements IRenderEvent, IUpdateEvent, IMouseMoveEvent
 		if (currentScreen == null)
 			return;
 
+		if (currentScreen instanceof IReceiveMouseClickEvent)
+			((IReceiveMouseClickEvent) currentScreen).onMouseClick(button, x, y);
+
 		for (IRenderable renderable : currentScreen.getComponents())
 			if (renderable instanceof IReceiveMouseClickEvent)
 				((IReceiveMouseClickEvent) renderable).onMouseClick(button, x, y);
+	}
+
+	@Override
+	public void onKeyDown(int key)
+	{
+		if (currentScreen == null)
+			return;
+
+		if (currentScreen instanceof IReceiveKeyDownEvent)
+			((IReceiveKeyDownEvent) currentScreen).onKeyDown(key);
+
+		for (IRenderable renderable : currentScreen.getComponents())
+			if (renderable instanceof IReceiveKeyDownEvent)
+				((IReceiveKeyDownEvent) renderable).onKeyDown(key);
+	}
+
+	@Override
+	public void onKeyUp(int key)
+	{
+		if (currentScreen == null)
+			return;
+
+		if (currentScreen instanceof IReceiveKeyUpEvent)
+			((IReceiveKeyUpEvent) currentScreen).onKeyUp(key);
+
+		for (IRenderable renderable : currentScreen.getComponents())
+			if (renderable instanceof IReceiveKeyUpEvent)
+				((IReceiveKeyUpEvent) renderable).onKeyUp(key);
 	}
 
 	protected IScreen currentScreen;

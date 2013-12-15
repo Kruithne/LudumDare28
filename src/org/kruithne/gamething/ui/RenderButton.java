@@ -49,8 +49,8 @@ public abstract class RenderButton implements IRenderable, IReceiveMouseMoveEven
 
 	protected boolean withinBounds(int x, int y)
 	{
-		int drawX = buttonImage.getDrawX();
-		int drawY = buttonImage.getDrawY();
+		float drawX = buttonImage.getDrawX();
+		float drawY = buttonImage.getDrawY();
 
 		return (x > drawX && x < (drawX + buttonImage.getWidth())) && (y > drawY && y < (drawY + buttonImage.getHeight()));
 	}

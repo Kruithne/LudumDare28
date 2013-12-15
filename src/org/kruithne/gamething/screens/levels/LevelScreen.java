@@ -1,11 +1,15 @@
 package org.kruithne.gamething.screens.levels;
 
 import org.kruithne.gamething.GameThing;
+import org.kruithne.gamething.game.Movement;
+import org.kruithne.gamething.input.KeyBinding;
 import org.kruithne.gamething.logging.Logger;
 import org.kruithne.gamething.maps.CharacterSpawn;
 import org.kruithne.gamething.maps.ITileObject;
 import org.kruithne.gamething.maps.MapLoader;
 import org.kruithne.gamething.maps.RenderMapTile;
+import org.kruithne.gamething.rendering.IReceiveKeyDownEvent;
+import org.kruithne.gamething.rendering.IReceiveKeyUpEvent;
 import org.kruithne.gamething.rendering.IRenderable;
 import org.kruithne.gamething.rendering.RenderImage;
 import org.kruithne.gamething.screens.ScreenBase;
@@ -13,7 +17,7 @@ import org.newdawn.slick.GameContainer;
 
 import java.util.List;
 
-public class LevelScreen extends ScreenBase
+public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IReceiveKeyUpEvent
 {
 	public LevelScreen()
 	{
@@ -57,6 +61,18 @@ public class LevelScreen extends ScreenBase
 				tile.setDrawY((tile.getTileY() * 64) + offsetY);
 			}
 		}
+
+		if (movement.isMovingRight())
+			offsetX -= movement.getMovementSpeed();
+
+		if (movement.isMovingLeft())
+			offsetX += movement.getMovementSpeed();
+
+		if (movement.isMovingBackward())
+			offsetY -= movement.getMovementSpeed();
+
+		if (movement.isMovingForward())
+			offsetY += movement.getMovementSpeed();
 	}
 
 	@Override
@@ -65,8 +81,34 @@ public class LevelScreen extends ScreenBase
 		return backgroundImage;
 	}
 
+	@Override
+	public void onKeyDown(int key)
+	{
+		handleInput(key, true);
+	}
+
+	@Override
+	public void onKeyUp(int key)
+	{
+		handleInput(key, false);
+	}
+
+	protected void handleInput(int key, boolean down)
+	{
+		KeyBinding binding = KeyBinding.getBinding(key);
+
+		switch (binding)
+		{
+			case FORWARD: movement.setMovingForward(down); break;
+			case BACKWARD: movement.setMovingBackward(down); break;
+			case LEFT: movement.setMovingLeft(down); break;
+			case RIGHT: movement.setMovingRight(down); break;
+		}
+	}
+
+	protected Movement movement = new Movement();
 	protected RenderImage backgroundImage;
 	protected RenderImage charImage;
-	protected int offsetX;
-	protected int offsetY;
+	protected float offsetX;
+	protected float offsetY;
 }
