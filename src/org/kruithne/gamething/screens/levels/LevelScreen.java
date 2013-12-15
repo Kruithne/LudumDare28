@@ -64,6 +64,8 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 			}
 		}
 
+		// ToDo: If we are moving in two directions, half the movement speed?
+
 		float charX = charImage.getDrawX();
 		float charY = charImage.getDrawY();
 
