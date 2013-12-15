@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MapLoader
 {
-	public static List<RenderMapTile> loadMap(String file)
+	public static List<ITileObject> loadMap(String file)
 	{
 		try
 		{
@@ -21,7 +21,7 @@ public class MapLoader
 			final byte[] pixels = ((DataBufferByte) bufferedImage.getRaster().getDataBuffer()).getData();
 
 			final int width = bufferedImage.getWidth();
-			List<RenderMapTile> tiles = new ArrayList<RenderMapTile>(0);
+			List<ITileObject> tiles = new ArrayList<ITileObject>(0);
 
 			final int pixelLength = 3;
 			for (int pixel = 0, row = 0, col = 0; pixel < pixels.length; pixel += pixelLength)
@@ -33,7 +33,16 @@ public class MapLoader
 				));
 
 				if (tile != null)
-					tiles.add(new RenderMapTile(tile.getTexture(),col, row));
+				{
+					ITileObject object;
+
+					if (tile == TileType.CHAR_START)
+						object = new CharacterSpawn(col, row);
+					else
+						object = new RenderMapTile(tile.getTexture(), col, row);
+
+					tiles.add(object);
+				}
 
 				col++;
 

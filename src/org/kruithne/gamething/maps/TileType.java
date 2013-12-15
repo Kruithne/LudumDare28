@@ -4,6 +4,7 @@ import org.kruithne.gamething.misc.RGB;
 
 public enum TileType
 {
+	CHAR_START(255, 0, 0, "char.png"),
 	BRICK(112, 89, 73, "brick.png");
 
 	private TileType(int r, int g, int b, String file)

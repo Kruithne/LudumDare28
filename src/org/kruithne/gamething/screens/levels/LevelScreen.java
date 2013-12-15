@@ -1,9 +1,11 @@
 package org.kruithne.gamething.screens.levels;
 
+import org.kruithne.gamething.GameThing;
 import org.kruithne.gamething.logging.Logger;
+import org.kruithne.gamething.maps.CharacterSpawn;
+import org.kruithne.gamething.maps.ITileObject;
 import org.kruithne.gamething.maps.MapLoader;
 import org.kruithne.gamething.maps.RenderMapTile;
-import org.kruithne.gamething.maps.TileType;
 import org.kruithne.gamething.rendering.IRenderable;
 import org.kruithne.gamething.rendering.RenderImage;
 import org.kruithne.gamething.screens.ScreenBase;
@@ -18,14 +20,29 @@ public class LevelScreen extends ScreenBase
 		backgroundImage = new RenderImage("dirt.png");
 		setupMap("start_map.png");
 
+		charImage = new RenderImage("char.png");
+		charImage.setDrawX((GameThing.windowWidth / 2) - (charImage.getWidth() / 2));
+		charImage.setDrawY((GameThing.windowHeight / 2) - (charImage.getHeight() / 2));
+		addComponent(charImage);
 	}
 
 	protected void setupMap(String map)
 	{
 		Logger.log("Loading map: " + map);
-		List<RenderMapTile> tiles = MapLoader.loadMap(map);
-		for (RenderMapTile tile : tiles)
-			addComponent(tile);
+		List<ITileObject> tiles = MapLoader.loadMap(map);
+		for (ITileObject tile : tiles)
+		{
+			if (tile instanceof RenderMapTile)
+				addComponent((RenderMapTile) tile);
+			else if (tile instanceof CharacterSpawn)
+				setSpawn(tile.getTileX(), tile.getTileY());
+		}
+	}
+
+	protected void setSpawn(int tileX, int tileY)
+	{
+		offsetX = (GameThing.windowWidth / 2) - (tileX * 64);
+		offsetY = (GameThing.windowHeight / 2) - (tileY * 64);
 	}
 
 	@Override
@@ -36,8 +53,8 @@ public class LevelScreen extends ScreenBase
 			if (object instanceof RenderMapTile)
 			{
 				RenderMapTile tile = (RenderMapTile) object;
-				tile.setDrawX(tile.getTileX() * 64);
-				tile.setDrawY(tile.getTileY() * 64);
+				tile.setDrawX((tile.getTileX() * 64) + offsetX);
+				tile.setDrawY((tile.getTileY() * 64) + offsetY);
 			}
 		}
 	}
@@ -49,4 +66,7 @@ public class LevelScreen extends ScreenBase
 	}
 
 	protected RenderImage backgroundImage;
+	protected RenderImage charImage;
+	protected int offsetX;
+	protected int offsetY;
 }

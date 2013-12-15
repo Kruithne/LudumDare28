@@ -14,4 +14,6 @@ public class GameThing
 	}
 
 	public final static MutablePicoContainer Engine = new PicoBuilder().withCaching().withLifecycle().build();
+	public final static int windowWidth = 1024;
+	public final static int windowHeight = 640;
 }
