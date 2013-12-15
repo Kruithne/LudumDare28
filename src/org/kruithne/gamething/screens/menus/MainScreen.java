@@ -4,6 +4,7 @@ import org.kruithne.gamething.GameController;
 import org.kruithne.gamething.rendering.RenderPosition;
 import org.kruithne.gamething.screens.ScreenBase;
 import org.kruithne.gamething.rendering.RenderImage;
+import org.kruithne.gamething.screens.levels.LevelScreen;
 import org.kruithne.gamething.ui.RenderSimpleButton;
 import org.newdawn.slick.GameContainer;
 
@@ -22,7 +23,7 @@ public class MainScreen extends ScreenBase
 		playButton.addClickHandler(new Runnable() {
 			@Override
 			public void run() {
-				GameController.setGameScreen(new MainScreen());
+				GameController.setGameScreen(new LevelScreen());
 			}
 		});
 
