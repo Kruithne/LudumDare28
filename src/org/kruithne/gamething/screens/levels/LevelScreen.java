@@ -1,6 +1,8 @@
 package org.kruithne.gamething.screens.levels;
 
 import org.kruithne.gamething.GameThing;
+import org.kruithne.gamething.entity.Entity;
+import org.kruithne.gamething.entity.EntityHandler;
 import org.kruithne.gamething.game.CollisionHandler;
 import org.kruithne.gamething.game.Movement;
 import org.kruithne.gamething.input.KeyBinding;
@@ -13,20 +15,17 @@ import org.kruithne.gamething.rendering.RenderImage;
 import org.kruithne.gamething.screens.ScreenBase;
 import org.newdawn.slick.GameContainer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IReceiveKeyUpEvent
 {
 	public LevelScreen()
 	{
-		crate = new RenderImage("crate.png");
 		charImage = new RenderImage("char.png");
 		backgroundImage = new RenderImage("dirt.png");
 
 		setupMap("start_map.png");
-
-		addComponent(crate);
-		collisionHandler.addEffectedByCollisionObject(crate);
 
 		charImage.setDrawX((GameThing.windowWidth / 2) - (charImage.getWidth() / 2));
 		charImage.setDrawY((GameThing.windowHeight / 2) - (charImage.getHeight() / 2));
@@ -37,6 +36,9 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 	{
 		Logger.log("Loading map: " + mapName);
 		map = MapLoader.loadMap(mapName);
+
+		List<Entity> entities = new ArrayList<Entity>(0);
+
 		for (ITileObject tile : map)
 		{
 			if (tile instanceof RenderMapTile)
@@ -44,8 +46,12 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 			else if (tile instanceof CharacterSpawn)
 				setSpawn(tile.getTileX(), tile.getTileY());
 			else if (tile instanceof PushableCrate)
-				setCrateSpawn(tile.getTileX(), tile.getTileY());
+				entities.add(createEntity(TileType.CRATE, tile.getTileX() * 64, tile.getTileY() * 64));
 		}
+
+		for (Entity entity : entities)
+			addComponent(entity);
+
 		collisionHandler.setMap(map);
 	}
 
@@ -53,12 +59,6 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 	{
 		offsetX = (GameThing.windowWidth / 2) - (tileX * 64);
 		offsetY = (GameThing.windowHeight / 2) - (tileY * 64);
-	}
-
-	protected void setCrateSpawn(int tileX, int tileY)
-	{
-		crate.setDrawX((tileX * 64) + offsetX);
-		crate.setDrawY((tileY * 64) + offsetY);
 	}
 
 	@Override
@@ -73,6 +73,8 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 				tile.setDrawY((tile.getTileY() * 64) + offsetY);
 			}
 		}
+
+		entityHandler.processUpdate(offsetX, offsetY);
 
 		// ToDo: If we are moving in two directions, half the movement speed?
 
@@ -141,12 +143,17 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 		}
 	}
 
+	protected Entity createEntity(TileType type, float x, float y)
+	{
+		return entityHandler.createEntity(type, x, y);
+	}
+
 	protected List<ITileObject> map;
 	protected Movement movement = new Movement();
 	protected CollisionHandler collisionHandler = new CollisionHandler();
+	protected EntityHandler entityHandler = new EntityHandler(collisionHandler);
 	protected RenderImage backgroundImage;
 	protected RenderImage charImage;
-	protected RenderImage crate;
 	protected float offsetX;
 	protected float offsetY;
 }

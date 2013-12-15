@@ -1,7 +1,7 @@
 package org.kruithne.gamething.game;
 
+import org.kruithne.gamething.entity.Entity;
 import org.kruithne.gamething.maps.ITileObject;
-import org.kruithne.gamething.rendering.RenderPositionalObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,22 +18,31 @@ public class CollisionHandler
 		List<CollisionBound> bounds = new ArrayList<CollisionBound>(1);
 		aX -= 1;
 		aY -= 1;
-		//float bX = aX + 63;
-		//float bY = aY + 63;
 
-		bounds.add(new CollisionBound(aX, aY, aX + 63, aY + 63));
+		CollisionBound playerBound = new CollisionBound(aX, aY, aX + 63, aY + 63);
+		bounds.add(playerBound);
 
 		float diffX = origX - projectedX;
 		float diffY = origY - projectedY;
 
-		for (RenderPositionalObject object : moveObjects)
+		for (Entity entity : entityList)
 		{
-			float sX = object.getDrawX() + diffX;
-			float sY = object.getDrawY() + diffY;
-			CollisionBound bound = new CollisionBound(sX, sY, sX + 64, sY + 64);
-			bound.setObject(object);
+			if (entity.getType().isCollidable())
+			{
+				float entityX = (entity.getX() + projectedX) - 1;
+				float entityY = (entity.getY() + projectedY) - 1;
+				float entityEndX = entityX + 63;
+				float entityEndY = entityY + 63;
 
-			bounds.add(bound);
+				CollisionBound check = new CollisionBound(entityX, entityY, entityEndX, entityEndY);
+				if (intersects(check, playerBound))
+				{
+					check.offsetX(diffX);
+					check.offsetY(diffY);
+					check.setEntity(entity);
+					bounds.add(check);
+				}
+			}
 		}
 
 		for (ITileObject object : map)
@@ -46,17 +55,15 @@ public class CollisionHandler
 				float tileEndX = tileStartX + 64;
 				float tileEndY = tileStartY + 64;
 
+				CollisionBound check = new CollisionBound(tileStartX, tileStartY, tileEndX, tileEndY);
 				for (CollisionBound bound : bounds)
-				{
-					CollisionBound check = new CollisionBound(tileStartX, tileStartY, tileEndX, tileEndY);
 					if (intersects(check, bound))
 						return false;
-				}
 			}
 		}
 
 		for (CollisionBound bound : bounds)
-			bound.updateObject();
+			bound.updateEntity();
 
 		return true;
 	}
@@ -83,11 +90,11 @@ public class CollisionHandler
 		return ((cX > sX && cX < eX) && (cY > sY && cY < eY));
 	}
 
-	public void addEffectedByCollisionObject(RenderPositionalObject object)
+	public void setEntityList(List<Entity> list)
 	{
-		moveObjects.add(object);
+		entityList = list;
 	}
 
-	protected List<ITileObject> map;
-	protected List<RenderPositionalObject> moveObjects = new ArrayList<RenderPositionalObject>(0);
+	private List<ITileObject> map;
+	private List<Entity> entityList;
 }

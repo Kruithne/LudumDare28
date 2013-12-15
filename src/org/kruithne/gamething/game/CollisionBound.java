@@ -1,5 +1,6 @@
 package org.kruithne.gamething.game;
 
+import org.kruithne.gamething.entity.Entity;
 import org.kruithne.gamething.rendering.RenderPositionalObject;
 
 public class CollisionBound
@@ -12,23 +13,39 @@ public class CollisionBound
 		this.bY = bY;
 	}
 
-	public void setObject(RenderPositionalObject object)
+	public void setEntity(Entity entity)
 	{
-		this.object = object;
+		this.entity = entity;
 	}
 
-	public void updateObject()
+	public void offsetX(float offset)
 	{
-		if (object != null)
+		aX += offset;
+		bX += offset;
+		offsetX += offset;
+	}
+
+	public void offsetY(float offset)
+	{
+		aY += offset;
+		bY += offset;
+		offsetY += offset;
+	}
+
+	public void updateEntity()
+	{
+		if (entity != null)
 		{
-			object.setDrawX(aX);
-			object.setDrawY(aY);
+			entity.setX(entity.getX() + offsetX);
+			entity.setY(entity.getY() + offsetY);
 		}
 	}
 
+	protected float offsetX;
+	protected float offsetY;
 	protected float aX;
 	protected float aY;
 	protected float bX;
 	protected float bY;
-	private RenderPositionalObject object;
+	private Entity entity;
 }

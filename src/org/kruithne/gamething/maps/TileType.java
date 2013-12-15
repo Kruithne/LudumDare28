@@ -7,7 +7,8 @@ public enum TileType
 	CHAR_START(255, 0, 0, "char.png"),
 	BRICK(112, 89, 73, "brick.png", true),
 	DARK_BRICK(33, 26, 22, "dark_brick.png"),
-	CRATE(99, 68, 51, "crate.png", true, true);
+	CRATE(99, 68, 51, "crate.png", true, true),
+	END_HOLE(255, 0, 110, "end_hole.png");
 
 	private TileType(int r, int g, int b, String file, boolean causesCollision, boolean isPushable)
 	{
