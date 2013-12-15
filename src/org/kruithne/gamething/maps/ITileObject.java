@@ -4,4 +4,5 @@ public interface ITileObject
 {
 	int getTileX();
 	int getTileY();
+	TileType getTileType();
 }

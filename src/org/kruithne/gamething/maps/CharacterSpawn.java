@@ -20,6 +20,12 @@ public class CharacterSpawn implements ITileObject
 		return tileY;
 	}
 
+	@Override
+	public TileType getTileType()
+	{
+		return TileType.CHAR_START;
+	}
+
 	protected int tileX;
 	protected int tileY;
 }

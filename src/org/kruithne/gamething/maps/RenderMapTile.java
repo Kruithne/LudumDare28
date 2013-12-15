@@ -4,9 +4,10 @@ import org.kruithne.gamething.rendering.RenderImage;
 
 public class RenderMapTile extends RenderImage implements ITileObject
 {
-	public RenderMapTile(String imageString, int tileX, int tileY)
+	public RenderMapTile(TileType tileType, int tileX, int tileY)
 	{
-		super(imageString);
+		super(tileType.getTexture());
+		this.tileType = tileType;
 		this.tileX = tileX;
 		this.tileY = tileY;
 	}
@@ -23,6 +24,13 @@ public class RenderMapTile extends RenderImage implements ITileObject
 		return tileY;
 	}
 
+	@Override
+	public TileType getTileType()
+	{
+		return tileType;
+	}
+
 	protected int tileX;
 	protected int tileY;
+	protected TileType tileType;
 }

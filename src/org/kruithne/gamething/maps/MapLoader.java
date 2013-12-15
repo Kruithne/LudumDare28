@@ -39,7 +39,7 @@ public class MapLoader
 					if (tile == TileType.CHAR_START)
 						object = new CharacterSpawn(col, row);
 					else
-						object = new RenderMapTile(tile.getTexture(), col, row);
+						object = new RenderMapTile(tile, col, row);
 
 					tiles.add(object);
 				}

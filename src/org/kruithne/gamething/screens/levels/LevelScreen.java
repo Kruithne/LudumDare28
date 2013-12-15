@@ -1,6 +1,7 @@
 package org.kruithne.gamething.screens.levels;
 
 import org.kruithne.gamething.GameThing;
+import org.kruithne.gamething.game.CollisionHandler;
 import org.kruithne.gamething.game.Movement;
 import org.kruithne.gamething.input.KeyBinding;
 import org.kruithne.gamething.logging.Logger;
@@ -30,17 +31,18 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 		addComponent(charImage);
 	}
 
-	protected void setupMap(String map)
+	protected void setupMap(String mapName)
 	{
-		Logger.log("Loading map: " + map);
-		List<ITileObject> tiles = MapLoader.loadMap(map);
-		for (ITileObject tile : tiles)
+		Logger.log("Loading map: " + mapName);
+		map = MapLoader.loadMap(mapName);
+		for (ITileObject tile : map)
 		{
 			if (tile instanceof RenderMapTile)
 				addComponent((RenderMapTile) tile);
 			else if (tile instanceof CharacterSpawn)
 				setSpawn(tile.getTileX(), tile.getTileY());
 		}
+		collisionHandler.setMap(map);
 	}
 
 	protected void setSpawn(int tileX, int tileY)
@@ -62,17 +64,38 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 			}
 		}
 
+		float charX = charImage.getDrawX();
+		float charY = charImage.getDrawY();
+
+		float speed = movement.getMovementSpeed();
+
 		if (movement.isMovingRight())
-			offsetX -= movement.getMovementSpeed();
+		{
+			float projectedX = offsetX - speed;
+			if (collisionHandler.runCheck(projectedX, offsetY, charX, charY))
+				offsetX = projectedX;
+		}
 
 		if (movement.isMovingLeft())
-			offsetX += movement.getMovementSpeed();
+		{
+			float projectedX = offsetX + speed;
+			if (collisionHandler.runCheck(projectedX, offsetY, charX, charY))
+				offsetX = projectedX;
+		}
 
 		if (movement.isMovingBackward())
-			offsetY -= movement.getMovementSpeed();
+		{
+			float projectedY = offsetY - speed;
+			if (collisionHandler.runCheck(offsetX, projectedY, charX, charY))
+				offsetY = projectedY;
+		}
 
 		if (movement.isMovingForward())
-			offsetY += movement.getMovementSpeed();
+		{
+			float projectedY = offsetY + speed;
+			if (collisionHandler.runCheck(offsetX, projectedY, charX, charY))
+				offsetY = projectedY;
+		}
 	}
 
 	@Override
@@ -106,7 +129,9 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 		}
 	}
 
+	protected List<ITileObject> map;
 	protected Movement movement = new Movement();
+	protected CollisionHandler collisionHandler = new CollisionHandler();
 	protected RenderImage backgroundImage;
 	protected RenderImage charImage;
 	protected float offsetX;
