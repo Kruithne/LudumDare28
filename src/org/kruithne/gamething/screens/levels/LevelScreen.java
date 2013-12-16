@@ -1,5 +1,6 @@
 package org.kruithne.gamething.screens.levels;
 
+import org.kruithne.gamething.GameController;
 import org.kruithne.gamething.GameThing;
 import org.kruithne.gamething.entity.Entity;
 import org.kruithne.gamething.entity.EntityHandler;
@@ -140,6 +141,7 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 			case BACKWARD: movement.setMovingBackward(down); break;
 			case LEFT: movement.setMovingLeft(down); break;
 			case RIGHT: movement.setMovingRight(down); break;
+			case RELOAD: GameController.setGameScreen(new LevelScreen()); break;
 		}
 	}
 

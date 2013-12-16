@@ -32,10 +32,10 @@ public class CollisionHandler
 		{
 			if (entity.getType().isCollidable())
 			{
-				float entityX = entity.getX() + projectedX;
-				float entityY = entity.getY() + projectedY;
-				float entityEndX = entityX + 64;
-				float entityEndY = entityY + 64;
+				float entityX = (entity.getX() + projectedX) + 1;
+				float entityY = (entity.getY() + projectedY) + 1;
+				float entityEndX = entityX + 63;
+				float entityEndY = entityY + 63;
 
 				CollisionBound check = new CollisionBound(entityX, entityY, entityEndX, entityEndY);
 				if (intersects(check, playerBound))

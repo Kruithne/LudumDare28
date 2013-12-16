@@ -9,7 +9,8 @@ public enum KeyBinding
 	FORWARD(17, 200),
 	BACKWARD(31, 208),
 	RIGHT(32, 205),
-	LEFT(30, 203);
+	LEFT(30, 203),
+	RELOAD(19);
 
 	private KeyBinding(Integer... keys)
 	{
