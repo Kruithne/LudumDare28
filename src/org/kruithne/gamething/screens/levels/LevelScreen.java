@@ -46,7 +46,7 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 			else if (tile instanceof CharacterSpawn)
 				setSpawn(tile.getTileX(), tile.getTileY());
 			else if (tile instanceof PushableCrate)
-				entities.add(createEntity(TileType.CRATE, tile.getTileX() * 64, tile.getTileY() * 64));
+				entities.add(entityHandler.createBreakableEntity(TileType.CRATE, tile.getTileX() * 64, tile.getTileY() * 64));
 		}
 
 		for (Entity entity : entities)
@@ -141,11 +141,6 @@ public class LevelScreen extends ScreenBase implements IReceiveKeyDownEvent, IRe
 			case LEFT: movement.setMovingLeft(down); break;
 			case RIGHT: movement.setMovingRight(down); break;
 		}
-	}
-
-	protected Entity createEntity(TileType type, float x, float y)
-	{
-		return entityHandler.createEntity(type, x, y);
 	}
 
 	protected List<ITileObject> map;

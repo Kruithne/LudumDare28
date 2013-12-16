@@ -20,6 +20,13 @@ public class EntityHandler
 		return entity;
 	}
 
+	public BreakableEntity createBreakableEntity(TileType type, float x, float y)
+	{
+		BreakableEntity entity = new BreakableEntity(type, x, y);
+		entities.add(entity);
+		return entity;
+	}
+
 	public void processUpdate(float offsetX, float offsetY)
 	{
 		for (Entity entity : entities)

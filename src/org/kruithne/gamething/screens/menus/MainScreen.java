@@ -1,6 +1,7 @@
 package org.kruithne.gamething.screens.menus;
 
 import org.kruithne.gamething.GameController;
+import org.kruithne.gamething.GameThing;
 import org.kruithne.gamething.rendering.RenderPosition;
 import org.kruithne.gamething.screens.ScreenBase;
 import org.kruithne.gamething.rendering.RenderImage;
@@ -30,6 +31,17 @@ public class MainScreen extends ScreenBase
 		logo.setRenderPositionX(RenderPosition.SCREEN_CENTRE);
 		logoFlash.setRenderPositionX(RenderPosition.SCREEN_CENTRE);
 		playButtonImage.setRenderPositionX(RenderPosition.SCREEN_CENTRE);
+
+		RenderImage brazier1 = new RenderImage("brazier.png", 0, 0);
+		RenderImage brazier2 = new RenderImage("brazier.png", 0, 0);
+
+		brazier1.setDrawY(GameThing.windowHeight - brazier1.getHeight());
+		brazier2.setDrawY(GameThing.windowHeight - brazier2.getHeight());
+		brazier1.setDrawX(50);
+		brazier2.setDrawX(GameThing.windowWidth - brazier2.getWidth() - 50);
+
+		addComponent(brazier1);
+		addComponent(brazier2);
 
 		addComponent(logo);
 		addComponent(logoFlash);

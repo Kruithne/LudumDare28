@@ -15,6 +15,11 @@ public class RenderImage extends RenderPositionalObject implements IRenderable
 	public RenderImage(String imageString, int x, int y)
 	{
 		super(x, y);
+		setTexture(imageString);
+	}
+
+	public void setTexture(String imageString)
+	{
 		this.image = ImageLoader.getImage(imageString);
 	}
 

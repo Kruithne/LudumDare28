@@ -1,6 +1,7 @@
 package org.kruithne.gamething.game;
 
 import org.kruithne.gamething.GameController;
+import org.kruithne.gamething.entity.BreakableEntity;
 import org.kruithne.gamething.entity.Entity;
 import org.kruithne.gamething.maps.ITileObject;
 import org.kruithne.gamething.maps.TileType;
@@ -65,15 +66,30 @@ public class CollisionHandler
 					if (intersects(check, bound))
 						return false;
 			}
-			else if (type == TileType.END_HOLE)
+
+			BreakableEntity crateEntity = null;
+			CollisionBound crateBound= null;
+			for (CollisionBound bound : bounds)
 			{
-				for (CollisionBound bound : bounds)
+				Entity entity = bound.getEntity();
+				if (entity != null && entity.getType() == TileType.CRATE)
 				{
-					if (bound.getEntity() != null && bound.getEntity().getType() == TileType.CRATE)
-					{
-						if (intersects(check, bound))
+					crateEntity = (BreakableEntity) entity;
+					crateBound = bound;
+				}
+			}
+
+			if (crateEntity != null && intersects(check, crateBound))
+			{
+				switch (type)
+				{
+					case END_HOLE:
 							GameController.endGame();
-					}
+					break;
+
+					case TRAP:
+						crateEntity.breakEntity();
+					break;
 				}
 			}
 		}
