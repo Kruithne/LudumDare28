@@ -19,10 +19,10 @@ public class CollisionHandler
 	public boolean runCheck(float projectedX, float projectedY, float aX, float aY, float origX, float origY)
 	{
 		List<CollisionBound> bounds = new ArrayList<CollisionBound>(1);
-		aX -= 1;
-		aY -= 1;
+		aX += 3;
+		aY += 3;
 
-		CollisionBound playerBound = new CollisionBound(aX, aY, aX + 63, aY + 63);
+		CollisionBound playerBound = new CollisionBound(aX, aY, aX + 59, aY + 59);
 		bounds.add(playerBound);
 
 		float diffX = origX - projectedX;
@@ -32,10 +32,10 @@ public class CollisionHandler
 		{
 			if (entity.getType().isCollidable())
 			{
-				float entityX = (entity.getX() + projectedX) + 1;
-				float entityY = (entity.getY() + projectedY) + 1;
-				float entityEndX = entityX + 63;
-				float entityEndY = entityY + 63;
+				float entityX = entity.getX() + projectedX;
+				float entityY = entity.getY() + projectedY;
+				float entityEndX = entityX + 64;
+				float entityEndY = entityY + 64;
 
 				CollisionBound check = new CollisionBound(entityX, entityY, entityEndX, entityEndY);
 				if (intersects(check, playerBound))
@@ -119,7 +119,7 @@ public class CollisionHandler
 
 	private boolean intersects(float sX, float sY, float eX, float eY, float cX, float cY)
 	{
-		return ((cX > sX && cX < eX) && (cY > sY && cY < eY));
+		return ((cX >= sX && cX <= eX) && (cY >= sY && cY <= eY));
 	}
 
 	public void setEntityList(List<Entity> list)

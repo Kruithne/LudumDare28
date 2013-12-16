@@ -64,7 +64,7 @@ public class Movement
 		movementSpeed = speed;
 	}
 
-	protected float movementSpeed = 0.3f;
+	protected float movementSpeed = 2f;
 	protected boolean movingForward;
 	protected boolean movingBackward;
 	protected boolean movingRight;

@@ -22,14 +22,14 @@ public class BlackScreen extends ScreenBase implements IScreenOverlay
 			if (fadingIn)
 			{
 				if (currentAlpha < 1F)
-					tile.setAlpha(currentAlpha + 0.001F);
+					tile.setAlpha(currentAlpha + 0.01F);
 				else
 					animating = false;
 			}
 			else
 			{
 				if (currentAlpha > 0F)
-					tile.setAlpha(currentAlpha - 0.001F);
+					tile.setAlpha(currentAlpha - 0.01F);
 				else
 					animating = false;
 			}

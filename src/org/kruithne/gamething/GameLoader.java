@@ -16,6 +16,7 @@ public class GameLoader implements Startable
 		{
 			container = new AppGameContainer(new MainGame());
 			container.setDisplayMode(GameThing.windowWidth, GameThing.windowHeight, fullScreen);
+			container.setTargetFrameRate(60);
 			container.start();
 		}
 		catch(SlickException exception)
